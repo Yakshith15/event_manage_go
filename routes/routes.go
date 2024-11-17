@@ -6,7 +6,7 @@ import (
     "event_management/middleware"
 )
 
-func SetupRoutes(app *fiber.App) {
+func SetUpRoutes(app *fiber.App) {
 
     app.Post("/register", controllers.Register)
     app.Post("/login", controllers.Login)

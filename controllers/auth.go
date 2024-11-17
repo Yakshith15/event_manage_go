@@ -2,19 +2,22 @@ package controllers
 
 import (
 	"context"
-    "github.com/gofiber/fiber/v2"
-    "event_management/database"
-    "event_management/models"
-    "event_management/utils"
-    "golang.org/x/crypto/bcrypt"
-    "go.mongodb.org/mongo-driver/bson"
-    "net/http"
+	"event_management/database"
+	"event_management/models"
+	"event_management/utils"
+	"log"
+	"net/http"
+
+	"github.com/gofiber/fiber/v2"
+	"go.mongodb.org/mongo-driver/bson"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(c *fiber.Ctx) error{
 	var user models.User
 
 	if err:= c.BodyParser(&user); err!=nil{
+        log.Println("check 1")
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error":"Invalid request"})
 	}
 
