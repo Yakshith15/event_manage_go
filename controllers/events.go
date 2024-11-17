@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
 	"event_management/database"
 	"event_management/models"
+
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -32,4 +33,23 @@ func GetEvents(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(events)
+}
+
+
+func CreateEvent(c *fiber.Ctx) error{
+	var event models.Event 
+	if err:= c.BodyParser(&event); err!=nil{
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request"})
+	}
+
+	ctx,cancel := context.WithTimeout(context.Background(),time.Second*10)
+	defer cancel()
+	
+	_,err := database.DB.Collection("events").InsertOne(ctx,event);
+	if(err!=nil){
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create event"})
+	}
+
+	return c.Status(http.StatusCreated).JSON(event)
+	
 }

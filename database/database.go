@@ -10,7 +10,7 @@ import (
 )
 
 var DB *mongo.Database
-func connectDB() {
+func ConnectDB() {
 	uri := os.Getenv("MONGO_URI")
 	ctx,cancel := context.WithTimeout(context.Background(),10*time.Second)
 	defer cancel()
