@@ -61,6 +61,9 @@ func Login(c *fiber.Ctx)error{
     // Generate JWT token
     token, err := utils.GenerateJWT(user.Email, user.Role)
     if err != nil {
+		log.Println(user.Email)
+		log.Println(user.Role)
+		log.Println(err)
         return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to generate token"})
     }
 

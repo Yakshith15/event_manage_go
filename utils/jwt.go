@@ -2,13 +2,14 @@ package utils
 
 import (
     "fmt"
-    "time"
+    "time"  
+    // "log"
 	"os"
     "github.com/golang-jwt/jwt/v4"
 )
 
-var secretKey = os.Getenv("JWT_SECRET") // Use a more secure secret in production
-
+var secretKey = []byte(os.Getenv("JWT_SECRET")) // Use a more secure secret in production
+// log.Println("JWT_SECRET:", secretKey)
 // GenerateJWT generates a new JWT token
 func GenerateJWT(email string, role string) (string, error) {
     claims := jwt.MapClaims{
